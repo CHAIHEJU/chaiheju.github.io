@@ -1,110 +1,960 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="柴贺榉的个人网站，展示人工智能、大语言模型、RAG、计算机视觉项目与经历。">
+  <title>柴贺榉 | AI & Computer Science</title>
 
-    <title>柴贺榉的个人网站</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --surface: #ffffff;
+      --surface-soft: #eef3f8;
+      --text: #182230;
+      --muted: #5f6b7a;
+      --primary: #0f4c81;
+      --primary-dark: #0a355a;
+      --accent: #ef4444;
+      --border: #dfe6ee;
+      --shadow: 0 14px 40px rgba(15, 76, 129, 0.10);
+      --radius: 18px;
+      --max-width: 1120px;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            color: #222;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        header {
-            background-color: #1f2937;
-            color: white;
-            text-align: center;
-            padding: 80px 20px;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        header h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+    }
 
-        header p {
-            font-size: 18px;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
 
-        section {
-            background-color: white;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(223, 230, 238, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
 
-        h2 {
-            border-bottom: 2px solid #eeeeee;
-            padding-bottom: 10px;
-        }
+    .nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-        }
-    </style>
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 96px 0 72px;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(239, 68, 68, 0.30), transparent 26%),
+        radial-gradient(circle at 15% 90%, rgba(66, 153, 225, 0.26), transparent 30%),
+        linear-gradient(135deg, #071f34 0%, #0f4c81 55%, #123d63 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 0.8fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 7px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-title {
+      margin: 18px 0 0;
+      font-size: clamp(22px, 3vw, 34px);
+      color: #dcecff;
+      font-weight: 700;
+    }
+
+    .hero-intro {
+      max-width: 760px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 17px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: var(--primary-dark);
+      background: white;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .button-secondary {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .profile-card {
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.10);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .avatar {
+      width: 92px;
+      height: 92px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border: 3px solid rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff, #cde5ff);
+      color: var(--primary-dark);
+      font-size: 40px;
+      font-weight: 900;
+    }
+
+    .profile-card h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+    }
+
+    .profile-card p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .profile-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+      font-size: 14px;
+    }
+
+    .profile-list span {
+      display: block;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 12px;
+    }
+
+    .stats {
+      position: relative;
+      z-index: 2;
+      margin-top: -30px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .stat {
+      padding: 24px 18px;
+      text-align: center;
+    }
+
+    .stat + .stat {
+      border-left: 1px solid var(--border);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--primary);
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    .section {
+      padding: 82px 0;
+    }
+
+    .section-soft {
+      background: var(--surface-soft);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 38px;
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.18;
+    }
+
+    .section-description {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(24, 34, 48, 0.05);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 20px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 26px;
+      padding: 28px;
+    }
+
+    .timeline-date {
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .timeline-content h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .timeline-meta {
+      margin: 4px 0 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .timeline-content ul,
+    .project-card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .timeline-content li + li,
+    .project-card li + li {
+      margin-top: 7px;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .skill-card {
+      padding: 26px;
+    }
+
+    .skill-card h3 {
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .tag {
+      padding: 7px 10px;
+      border: 1px solid #d7e3ef;
+      border-radius: 999px;
+      background: #f7fbff;
+      color: #31536f;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      padding: 26px;
+    }
+
+    .project-date {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .project-card h3 {
+      margin: 10px 0 12px;
+      font-size: 21px;
+      line-height: 1.35;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .project-metric {
+      margin-top: auto;
+      padding-top: 22px;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .honor-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .honor {
+      padding: 24px;
+    }
+
+    .honor strong {
+      display: block;
+      color: var(--primary-dark);
+      font-size: 18px;
+    }
+
+    .honor span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      padding: 38px;
+      color: white;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      box-shadow: var(--shadow);
+    }
+
+    .contact-panel h2 {
+      margin: 0 0 12px;
+      font-size: 34px;
+    }
+
+    .contact-panel p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    footer {
+      padding: 30px 0 44px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .section-heading,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .stat:nth-child(4) {
+        border-top: 1px solid var(--border);
+      }
+
+      .skill-grid,
+      .project-grid,
+      .honor-list {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat + .stat {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .contact-panel {
+        padding: 28px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top">柴贺榉</a>
 
-    <header>
-        <h1>你好，我是柴贺榉</h1>
-        <p>Computer Science · Machine Learning · Computer Vision</p>
-    </header>
+      <nav class="nav-links" aria-label="主要导航">
+        <a href="#education">教育背景</a>
+        <a href="#experience">实习经历</a>
+        <a href="#skills">专业技能</a>
+        <a href="#projects">项目经历</a>
+        <a href="#honors">荣誉证书</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">AI · LLM · RAG · Computer Vision</span>
 
-        <section>
-            <h2>关于我</h2>
+          <h1>柴贺榉</h1>
+
+          <p class="hero-title">
+            计算机科学硕士生 / 人工智能算法工程方向
+          </p>
+
+          <p class="hero-intro">
+            关注大语言模型微调、检索增强生成、多模态学习与计算机视觉。
+            具备 Transformer、LoRA、Agentic RAG、DETR、BEVFormer
+            模型训练、评测与工程部署经验。
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="mailto:heju.chai@gmail.com">
+              邮件联系
+            </a>
+
+            <!--
+              使用方法：
+              1. 把你的简历 PDF 重命名为 resume.pdf
+              2. 上传到与 index.html 相同的 GitHub 仓库
+              3. 下面的按钮即可打开简历
+            -->
+            <a class="button button-secondary" href="resume.pdf" target="_blank" rel="noopener">
+              查看简历
+            </a>
+          </div>
+        </div>
+
+        <aside class="profile-card" aria-label="个人信息">
+          <div class="avatar" aria-hidden="true">柴</div>
+          <h2>AI Research & Engineering</h2>
+          <p>从模型研究到应用落地</p>
+
+          <div class="profile-list">
+            <div>
+              <span>当前教育背景</span>
+              昆士兰大学 · 计算机科学硕士
+            </div>
+
+            <div>
+              <span>研究方向</span>
+              LLM 微调、RAG、多模态学习
+            </div>
+
+            <div>
+              <span>联系邮箱</span>
+              heju.chai@gmail.com
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="container stats">
+      <div class="stats-grid">
+        <div class="stat">
+          <strong>93.5%</strong>
+          <span>核心异常行为识别准确率</span>
+        </div>
+
+        <div class="stat">
+          <strong>+6.2%</strong>
+          <span>小目标检测 mAP 提升</span>
+        </div>
+
+        <div class="stat">
+          <strong>91.8%</strong>
+          <span>Agentic RAG Recall@5</span>
+        </div>
+
+        <div class="stat">
+          <strong>89.2%</strong>
+          <span>LoRA 微调后测试准确率</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="education">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Education</p>
+            <h2 class="section-title">教育背景</h2>
+          </div>
+
+          <p class="section-description">
+            系统学习计算机科学与人工智能，并重点积累机器学习、
+            高级算法、自然语言处理和计算机视觉方面的知识。
+          </p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item card">
+            <div class="timeline-date">2026.02 — 2027.07</div>
+
+            <div class="timeline-content">
+              <h3>昆士兰大学</h3>
+              <p class="timeline-meta">计算机科学（硕士） · GPA 6.0 / 7.0</p>
+              <ul>
+                <li>研究方向：大语言模型微调、检索增强生成、多模态学习</li>
+                <li>核心课程：高级机器学习、高级算法与数据结构、高维数据处理、研究方法</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item card">
+            <div class="timeline-date">2020.09 — 2024.07</div>
+
+            <div class="timeline-content">
+              <h3>厦门大学</h3>
+              <p class="timeline-meta">人工智能（本科） · GPA 3.3 / 4.0 · 专业排名前 10 名</p>
+              <ul>
+                <li>核心课程：机器学习、深度学习、自然语言处理、计算机视觉、数据结构与算法</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="experience">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Experience</p>
+            <h2 class="section-title">实习经历</h2>
+          </div>
+
+          <p class="section-description">
+            参与车载视觉模型研发、训练优化、仿真测试，以及 Linux
+            服务器运维和非结构化日志自动化处理。
+          </p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item card">
+            <div class="timeline-date">2025.11 — 2026.02</div>
+
+            <div class="timeline-content">
+              <h3>电装（中国）投资有限公司</h3>
+              <p class="timeline-meta">算法工程师</p>
+              <ul>
+                <li>
+                  参与基于 BEVFormer 的多摄像头 BEV 语义分割模型研发，
+                  负责核心数据流处理、模型参数调优与复杂道路场景误差分析，
+                  使关键目标区域 mIoU 提升约 4.5%。
+                </li>
+                <li>
+                  基于 DETR 开展驾驶舱行为检测模型训练与评估，
+                  引入 Focal Loss 并优化数据采样策略，
+                  使小目标检测 mAP 提升 6.2%，核心异常行为识别准确率达到 93.5%。
+                </li>
+                <li>
+                  引入自动混合精度训练与余弦退火学习率调度，
+                  在保持精度的前提下降低约 45% 显存占用，
+                  并将单次模型迭代周期缩短 30%。
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="timeline-item card">
+            <div class="timeline-date">2024.07 — 2024.09</div>
+
+            <div class="timeline-content">
+              <h3>中国邮政集团有限公司鞍山市分公司</h3>
+              <p class="timeline-meta">网络安全工程师</p>
+              <ul>
+                <li>
+                  处理日均上千条非结构化系统日志，
+                  使用 Python 完成提取、清洗、特征匹配与异常流量初筛。
+                </li>
+                <li>
+                  协助完成 50 余台 Linux 服务器和网络节点的巡检、
+                  漏洞修复、网络排障与服务器环境配置。
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Skills</p>
+            <h2 class="section-title">专业技能</h2>
+          </div>
+
+          <p class="section-description">
+            覆盖深度学习模型训练、大模型微调、知识库检索、
+            Agent 工作流、计算机视觉与模型服务部署。
+          </p>
+        </div>
+
+        <div class="skill-grid">
+          <article class="skill-card card">
+            <h3>编程与深度学习</h3>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">Transformers</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Git</span>
+              <span class="tag">Docker</span>
+            </div>
+          </article>
+
+          <article class="skill-card card">
+            <h3>大模型微调</h3>
+            <div class="tags">
+              <span class="tag">Transformer</span>
+              <span class="tag">SFT</span>
+              <span class="tag">LoRA</span>
+              <span class="tag">QLoRA</span>
+              <span class="tag">PEFT</span>
+              <span class="tag">Qwen</span>
+              <span class="tag">Llama</span>
+            </div>
+          </article>
+
+          <article class="skill-card card">
+            <h3>RAG 与 Agent</h3>
+            <div class="tags">
+              <span class="tag">LangChain</span>
+              <span class="tag">ChromaDB</span>
+              <span class="tag">Embedding</span>
+              <span class="tag">Reranker</span>
+              <span class="tag">Query Rewrite</span>
+              <span class="tag">Function Calling</span>
+            </div>
+          </article>
+
+          <article class="skill-card card">
+            <h3>计算机视觉</h3>
+            <div class="tags">
+              <span class="tag">DETR</span>
+              <span class="tag">BEVFormer</span>
+              <span class="tag">CLIP</span>
+              <span class="tag">BERT</span>
+              <span class="tag">多模态融合</span>
+              <span class="tag">视觉语言模型</span>
+            </div>
+          </article>
+
+          <article class="skill-card card">
+            <h3>工程与部署</h3>
+            <div class="tags">
+              <span class="tag">FastAPI</span>
+              <span class="tag">vLLM</span>
+              <span class="tag">模型量化</span>
+              <span class="tag">推理加速</span>
+              <span class="tag">API 开发</span>
+            </div>
+          </article>
+
+          <article class="skill-card card">
+            <h3>训练与评测</h3>
+            <div class="tags">
+              <span class="tag">AMP</span>
+              <span class="tag">Focal Loss</span>
+              <span class="tag">Recall@5</span>
+              <span class="tag">MRR</span>
+              <span class="tag">mAP</span>
+              <span class="tag">mIoU</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Projects</p>
+            <h2 class="section-title">项目经历</h2>
+          </div>
+
+          <p class="section-description">
+            项目重点覆盖 Agentic RAG、LoRA 领域微调，
+            以及文本与图像联合生成审核流程。
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card card">
+            <div class="project-date">2026.03 — 2026.05</div>
+            <h3>Agentic RAG 多模态知识检索系统</h3>
             <p>
-                我是一名计算机科学专业的学生，
-                主要研究机器学习、深度学习和计算机视觉。
+              面向计算机视觉技术文档查询，构建支持文本说明、
+              模型架构图和元数据联合检索的多模态知识问答系统。
             </p>
-        </section>
+            <ul>
+              <li>使用 ChromaDB 建立向量知识库与元数据索引</li>
+              <li>设计 Query Rewrite、查询路由、重排序和答案生成流程</li>
+              <li>通过 Metadata Linking 关联文档与模型架构图</li>
+            </ul>
+            <div class="project-metric">Recall@5：72.5% → 91.8%</div>
+          </article>
 
-        <section>
-            <h2>我的项目</h2>
-
-            <h3>中国山水画生成</h3>
+          <article class="project-card card">
+            <div class="project-date">2025.06 — 2025.10</div>
+            <h3>基于 LoRA 的计算机视觉领域大模型微调</h3>
             <p>
-                使用 Pix2PixGAN 生成中国山水画皴法纹理。
+              基于 Qwen2.5-3B-Instruct 构建计算机视觉领域指令数据，
+              使用 PEFT 与 LoRA 完成监督微调和对比评测。
             </p>
+            <ul>
+              <li>完成数据清洗、模板构建与训练验证集划分</li>
+              <li>使用混合精度和梯度累积降低显存需求</li>
+              <li>比较 Base、Prompt-only 与 LoRA-SFT 模型</li>
+            </ul>
+            <div class="project-metric">准确率：68.5% → 89.2%</div>
+          </article>
 
-            <h3>肺部 CT 图像分析</h3>
+          <article class="project-card card">
+            <div class="project-date">2025.10 — 2026.02</div>
+            <h3>多模态内容生成与审核平台</h3>
             <p>
-                使用深度学习进行肺结节分割和检测。
+              构建文本与图像联合审核流程，
+              使用 CLIP 提取视觉特征，并结合 BERT 文本语义特征进行风险分类。
             </p>
+            <ul>
+              <li>设计 Prompt 模板和结构化输出约束</li>
+              <li>针对类别不平衡优化采样策略与分类阈值</li>
+              <li>使用 FastAPI 封装模型推理接口</li>
+            </ul>
+            <div class="project-metric">F1：92.4% · 误检率：3.5%</div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-            <h3>BEV 感知项目</h3>
+    <section class="section" id="honors">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Honors</p>
+            <h2 class="section-title">荣誉与证书</h2>
+          </div>
+
+          <p class="section-description">
+            数学建模竞赛获奖，并具备日语和英语能力证明。
+          </p>
+        </div>
+
+        <div class="honor-list">
+          <article class="honor card">
+            <strong>全国大学生数学建模竞赛</strong>
+            <span>2022 年 · 赛区三等奖</span>
+          </article>
+
+          <article class="honor card">
+            <strong>JLPT N2</strong>
+            <span>日本语能力测试</span>
+          </article>
+
+          <article class="honor card">
+            <strong>TOEFL 93</strong>
+            <span>英语能力证明</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="contact-panel">
+          <div>
+            <h2>期待与您交流</h2>
             <p>
-                研究 BEVFormer、NuScenes 和多摄像头感知技术。
+              欢迎就大语言模型、RAG、多模态学习、计算机视觉与算法工程进行联系。
             </p>
-        </section>
+          </div>
 
-        <section>
-            <h2>联系方式</h2>
-            <p>这里以后可以添加邮箱和 GitHub 地址。</p>
-        </section>
+          <div class="contact-links">
+            <a class="button button-primary" href="mailto:heju.chai@gmail.com">
+              heju.chai@gmail.com
+            </a>
 
-    </main>
+            <!-- 将下面链接替换成你的 GitHub 主页地址，然后删除 style="display:none" -->
+            <a
+              class="button button-secondary"
+              href="https://github.com/YOUR_GITHUB_USERNAME"
+              target="_blank"
+              rel="noopener"
+              style="display:none"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <footer>
-        © 2026 Chai Heju
-    </footer>
-
+  <footer>
+    <div class="container">
+      © 2026 柴贺榉 · Built with HTML & CSS · Hosted on GitHub Pages
+    </div>
+  </footer>
 </body>
-
 </html>
