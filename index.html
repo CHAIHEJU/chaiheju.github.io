@@ -180,17 +180,15 @@
     }
 
     .avatar {
-      width: 92px;
-      height: 92px;
-      display: grid;
-      place-items: center;
+      width: 120px;
+      height: 120px;
+      display: block;
       margin-bottom: 22px;
       border: 3px solid rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      background: linear-gradient(135deg, #ffffff, #cde5ff);
-      color: var(--primary-dark);
-      font-size: 40px;
-      font-weight: 900;
+      object-fit: cover;
+      object-position: center top;
+      background: white;
     }
 
     .profile-card h2 {
@@ -581,7 +579,7 @@
         </div>
 
         <aside class="profile-card" aria-label="个人信息">
-          <div class="avatar" aria-hidden="true">柴</div>
+          <img class="avatar" src="avatar.jpg" alt="柴贺榉的头像">
           <h2>AI Research & Engineering</h2>
           <p>从模型研究到应用落地</p>
 
